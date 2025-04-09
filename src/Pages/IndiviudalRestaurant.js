@@ -3,6 +3,8 @@ import { useParams } from "react-router";
 import RestaurantHeader from "../Components/Header/RestaurantHeader";
 import { useDispatch } from "react-redux";
 import { addItem } from "../utils/cartSlice";
+import { ShimmerThumbnail, ShimmerTitle } from "react-shimmer-effects";
+import { ScrollRestoration } from "react-router";
 
 const IndiviudalRestaurant = () => {
   const [categoryList, setCategoryList] = useState([]);
@@ -61,7 +63,25 @@ const IndiviudalRestaurant = () => {
     <>
       <RestaurantHeader />
       {isLoading ? (
-        <h1 className="mt-20">Loading</h1>
+        <div className="px-60 py-10 pb-0 mt-20">
+          <div className="breadcrumbs flex flex-col gap-2">
+            <ShimmerTitle line={1} />
+          </div>
+          <div className="banner w-full mt-2">
+            <ShimmerThumbnail height={175} rounded />
+          </div>
+          <div className="flex flex-col gap-3 my-2">
+            <ShimmerTitle line={1} />
+            <div className="discounts flex items-center justify-start gap-3 overflow-x-hidden scrollbar-hide">
+              {[...Array(3)].map((_, index) => (
+                <ShimmerThumbnail key={index} height={75} rounded width={300} />
+              ))}
+            </div>
+          </div>
+          {[...Array(10)].map((_, index) => (
+            <ShimmerThumbnail key={index} height={50} rounded />
+          ))}
+        </div>
       ) : categoryList.length > 0 ? (
         <div className="px-60 py-10 pb-0 mt-20">
           <div
@@ -74,7 +94,6 @@ const IndiviudalRestaurant = () => {
                 key={index}
                 className="flex items-center justify-between text-md"
               >
-
                 <div
                   className="w-8/12 cursor-pointer"
                   onClick={() => {
@@ -83,21 +102,17 @@ const IndiviudalRestaurant = () => {
                     const targetElement = document.getElementById(targetId);
 
                     if (targetElement) {
-
                       const elementPosition =
                         targetElement.getBoundingClientRect().top;
                       const offsetPosition =
                         elementPosition + window.pageYOffset - 100;
-
 
                       window.scrollTo({
                         top: offsetPosition,
                         behavior: "smooth",
                       });
 
-
                       targetElement.children[0].classList.add("bg-orange-300");
-
 
                       setTimeout(() => {
                         targetElement.children[0].classList.remove(
@@ -105,7 +120,7 @@ const IndiviudalRestaurant = () => {
                         );
                       }, 1000);
 
-                      setMenuBtn(false)
+                      setMenuBtn(false);
                     }
                   }}
                 >
@@ -265,12 +280,14 @@ const IndiviudalRestaurant = () => {
                     </div>
                   </div>
                   <div className="rounded-xl w-[150px] h-[150px] bg-gray-200 relative">
-                    {item.card.info.imageId && (
-                      <img
-                        src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_300,h_300,c_fit/${item.card.info.imageId}`}
-                        className="rounded-xl w-full h-full object-cover"
-                      />
-                    )}
+                    <img
+                      src={
+                        item.card.info.imageId
+                          ? `https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_300,h_300,c_fit/${item.card.info.imageId}`
+                          : "https://worldfoodtour.co.uk/wp-content/uploads/2013/06/neptune-placeholder-48.jpg"
+                      }
+                      className="rounded-xl w-full h-full object-cover"
+                    />
                     <div
                       className="absolute bg-white text-green-600 uppercase shadow-md p-2 px-6 font-semibold -bottom-4 left-10 cursor-pointer rounded-lg hover:bg-gray-100 duration-200 ease-in-out"
                       onClick={() => handleAddBtn(item.card.info)}
@@ -350,6 +367,7 @@ const IndiviudalRestaurant = () => {
           </div>
         </div>
       ) : null}
+      <ScrollRestoration />
     </>
   );
 };

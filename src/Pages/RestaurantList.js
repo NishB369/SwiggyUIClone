@@ -3,6 +3,8 @@ import Footer from "../Components/Footer/Footer";
 import RestaurantHeader from "../Components/Header/RestaurantHeader";
 import { Link, useParams } from "react-router";
 import RestaurantCard1 from "../Components/RestaurantCard/RestaurantCard1";
+import { ShimmerPostItem, ShimmerTitle } from "react-shimmer-effects";
+import { ScrollRestoration } from "react-router";
 
 const RestaurantList = () => {
   const [categoryList, setCategoryList] = useState([]);
@@ -38,7 +40,24 @@ const RestaurantList = () => {
     <>
       <RestaurantHeader />
       {isLoading ? (
-        <h1 className="mt-20">Loading</h1>
+        <div className="px-20 py-10 mt-20">
+          <div className="flex flex-col gap-2">
+            <ShimmerTitle line={3} gap={10} variant="primary" />
+          </div>
+          <div className="grid grid-cols-4 gap-x-4 gap-y-4 mt-6">
+            {[...Array(8)].map((_, index) => (
+              <ShimmerPostItem
+                key={index}
+                card
+                title
+                cta
+                imageType="thumbnail"
+                imageWidth={200}
+                imageHeight={100}
+              />
+            ))}
+          </div>
+        </div>
       ) : categoryList.length > 0 ? (
         <div className="px-20 py-10 mt-20">
           <div className="flex flex-col gap-2">
@@ -75,6 +94,7 @@ const RestaurantList = () => {
         </div>
       ) : null}
       <Footer />
+      <ScrollRestoration />
     </>
   );
 };

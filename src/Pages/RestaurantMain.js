@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import RestaurantHeader from "../Components/Header/RestaurantHeader";
-// import restaurantMainData from "../utility/RestaurantMainData";
 import RestaurantCard1 from "../Components/RestaurantCard/RestaurantCard1";
 import List from "../Components/List/List";
 import Footer from "../Components/Footer/Footer";
 import { Link } from "react-router";
+import { ShimmerCircularImage } from "react-shimmer-effects";
+import { ShimmerTitle } from "react-shimmer-effects";
+import { ShimmerPostItem } from "react-shimmer-effects";
+import { ScrollRestoration } from "react-router";
 
 const RestaurantMain = () => {
   const [categoryList, setCategoryList] = useState([]);
@@ -43,7 +46,72 @@ const RestaurantMain = () => {
     <>
       <RestaurantHeader />
       {isLoading ? (
-        <h1 className="mt-20">Loading...</h1>
+        <div className="px-40 flex flex-col gap-20 py-20 mt-20">
+          <div className="flex flex-col">
+            <div className="flex items-center justify-between">
+              <div className="w-5/6">
+                <ShimmerTitle line={1} variant="secondary" />
+              </div>
+              <div className="flex items-center justify-end gap-2 w-1/6">
+                <button className="bi bi-arrow-left rounded-full bg-gray-200 px-2 py-1 cursor-pointer"></button>
+                <button className="bi bi-arrow-right rounded-full bg-gray-200 px-2 py-1 cursor-pointer"></button>
+              </div>
+            </div>
+            <div className="flex items-center justify-start gap-12 overflow-x-scroll scrollbar-hide mt-8">
+              {[...Array(6)].map((_, index) => (
+                <ShimmerCircularImage size={115} />
+              ))}
+            </div>
+          </div>
+          <div className="flex flex-col">
+            <div className="flex items-center justify-between">
+              <div className="w-5/6">
+                <ShimmerTitle line={1} variant="secondary" />
+              </div>
+              <div className="flex items-center justify-end gap-2 w-1/6">
+                <button className="bi bi-arrow-left rounded-full bg-gray-200 px-2 py-1 cursor-pointer"></button>
+                <button className="bi bi-arrow-right rounded-full bg-gray-200 px-2 py-1 cursor-pointer"></button>
+              </div>
+            </div>
+            <div className="flex items-center justify-start gap-12 overflow-x-scroll scrollbar-hide mt-8">
+              {[...Array(6)].map((_, index) => (
+                <ShimmerPostItem
+                  key={index}
+                  card
+                  title
+                  cta
+                  imageType="thumbnail"
+                  imageWidth={150}
+                  imageHeight={75}
+                />
+              ))}
+            </div>
+          </div>
+          <div className="flex flex-col">
+            <div className="flex items-center justify-between">
+              <div className="w-5/6">
+                <ShimmerTitle line={1} variant="secondary" />
+              </div>
+              <div className="flex items-center justify-end gap-2 w-1/6">
+                <button className="bi bi-arrow-left rounded-full bg-gray-200 px-2 py-1 cursor-pointer"></button>
+                <button className="bi bi-arrow-right rounded-full bg-gray-200 px-2 py-1 cursor-pointer"></button>
+              </div>
+            </div>
+            <div className="grid grid-cols-4 overflow-x-scroll gap-10 mt-2">
+              {[...Array(8)].map((_, index) => (
+                <ShimmerPostItem
+                  key={index}
+                  card
+                  title
+                  cta
+                  imageType="thumbnail"
+                  imageWidth={150}
+                  imageHeight={75}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
       ) : categoryList.length > 0 ? (
         <div className="px-40 flex flex-col gap-20 py-20 mt-20">
           <div className="flex flex-col">
@@ -145,6 +213,7 @@ const RestaurantMain = () => {
         </div>
       ) : null}
       <Footer />
+      <ScrollRestoration />
     </>
   );
 };

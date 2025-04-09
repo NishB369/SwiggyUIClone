@@ -7,7 +7,7 @@ const HomeHeader = () => {
           className="w-40"
         />
       </div>
-      <div className="left_div flex items-center justify-between gap-8">
+      <div className="left_div flex items-center justify-between gap-8 w-3/4">
         <div>Swiggy Corporate</div>
         <div>Partner with us</div>
         <button className="font-medium border-2 border-white rounded-xl p-4 cursor-pointer">
